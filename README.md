@@ -24,7 +24,7 @@ If you use this code as part of any published research, please refer the followi
 
 ## Dataset Preparation
 We give example codes for CIFAR-100-Split / CIFAR-100-Superclass dataset.
-Download CIFAR-100-python version dataset from [Toronto-CIFAR](https://www.cs.toronto.edu/~kriz/cifar.html) to "your_directory".
+Download CIFAR-100-python version dataset ([Toronto-CIFAR](https://www.cs.toronto.edu/~kriz/cifar.html)).
 
 ## Model Run
 - Run one of the followings.

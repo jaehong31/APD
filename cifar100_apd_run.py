@@ -47,8 +47,8 @@ params = dict()
 assign_list = [ [], [], [], [] ]
 cent_list = []
 if FLAGS.data_type == 'default':
-	train_data, val_data = data_loader.cifar100_python('./datasets/cifar-100-python/train', group=FLAGS.n_classes, validation=True)
-	test_data = data_loader.cifar100_python('./datasets/cifar-100-python/test', group=FLAGS.n_classes)
+	train_data, val_data = data_loader.cifar100_python('./cifar-100-python/train', group=FLAGS.n_classes, validation=True)
+	test_data = data_loader.cifar100_python('./cifar-100-python/test', group=FLAGS.n_classes)
 
 	FLAGS.task_order= {
 			'orderA': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -59,8 +59,8 @@ if FLAGS.data_type == 'default':
 
 
 elif FLAGS.data_type == 'superclass':
-	train_data, val_data = data_loader.cifar100_superclass_python('./datasets/cifar-100-python/train', group=FLAGS.n_classes, validation=True)
-	test_data = data_loader.cifar100_superclass_python('./datasets/cifar-100-python/test', group=FLAGS.n_classes)
+	train_data, val_data = data_loader.cifar100_superclass_python('./cifar-100-python/train', group=FLAGS.n_classes, validation=True)
+	test_data = data_loader.cifar100_superclass_python('./cifar-100-python/test', group=FLAGS.n_classes)
 
 	FLAGS.task_order= {
 			'orderA': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19],
