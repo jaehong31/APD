@@ -157,14 +157,14 @@ def omniglot(path, n_tasks, n_classes, is_rotation=True, train=15):
 			shape of data : 4800 * 20 * Image_dim ((n_classes * 4) * n_instances * image)
 			=> Image1(0'), Image1(90'), Image1(180'), Image1(270'), Image2(0'), ...
 	
-  	USAGE EXAMPLE: 	
+ 	USAGE EXAMPLE: 	
 		all_data = data_loader.omniglot('/st1/jaehong/datasets/omniglot_anyshot/omni_train_rot.npy', n_tasks=FLAGS.n_tasks, n_classes=FLAGS.n_classes, train=15)
 
 		for idx, t in enumerate(FLAGS.task_order[FLAGS.order_type][:FLAGS.n_tasks]):
 			argdict = vars(FLAGS)
-		print(argdict)
-		data = (all_data[0][t], all_data[1][t], all_data[2][t], all_data[3][t])
-		model = MODEL(FLAGS, task_id=t)
+			print(argdict)
+			data = (all_data[0][t], all_data[1][t], all_data[2][t], all_data[3][t])
+			model = omniglot.MODEL(FLAGS, task_id=t)
 		...
  
 	"""
