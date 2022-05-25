@@ -145,3 +145,54 @@ def cifar100_superclass_python(data_path, group=5, validation=False, val_ratio=0
 
 	output = (train_split, val_split) if validation else train_split
 	return output
+
+
+
+def omniglot(path, n_tasks, n_classes, is_rotation=True, train=15):
+	"""
+	OUTPUT:	
+		is_rotation==False
+			shape of data : 1200 * 20 * Image_dim (n_classes * n_instances * image)
+		is_rotation==True
+			shape of data : 4800 * 20 * Image_dim ((n_classes * 4) * n_instances * image)
+			=> Image1(0'), Image1(90'), Image1(180'), Image1(270'), Image2(0'), ...
+	
+  	USAGE EXAMPLE: 	
+		all_data = data_loader.omniglot('/st1/jaehong/datasets/omniglot_anyshot/omni_train_rot.npy', n_tasks=FLAGS.n_tasks, n_classes=FLAGS.n_classes, train=15)
+
+		for idx, t in enumerate(FLAGS.task_order[FLAGS.order_type][:FLAGS.n_tasks]):
+			argdict = vars(FLAGS)
+		print(argdict)
+		data = (all_data[0][t], all_data[1][t], all_data[2][t], all_data[3][t])
+		model = MODEL(FLAGS, task_id=t)
+		...
+ 
+	"""
+	data = np.load(path)
+
+	n_angles = 4 if is_rotation else 1
+	n_unique_images_per_task = n_classes * n_angles
+	tr_n_eq_classes = train * n_angles
+	te_n_eq_classes = (20-train) * n_angles
+
+	_count = 0
+	tr_images_list = []
+	tr_labels_list = []
+	te_images_list = []
+	te_labels_list = []
+
+	tr_labels = [(np.arange(n_classes) == float(int(j/tr_n_eq_classes))).astype(np.float32) for j in range(n_classes * tr_n_eq_classes)]
+	te_labels = [(np.arange(n_classes) == float(int(j/te_n_eq_classes))).astype(np.float32) for j in range(n_classes * te_n_eq_classes)]
+	
+	for i in range(n_tasks):
+		images = data[n_unique_images_per_task*i:n_unique_images_per_task*(i+1),:]
+
+		tr_collect_im = images[:,:train].reshape([n_unique_images_per_task*train, 28, 28, 1])
+		tr_images_list.append(tr_collect_im)
+		tr_labels_list.append(tr_labels)
+		te_collect_im = images[:,train:].reshape([n_unique_images_per_task*(20-train), 28, 28, 1])
+		te_images_list.append(te_collect_im)
+		te_labels_list.append(te_labels)
+		_count += 1
+
+	return tr_images_list, tr_labels_list, te_images_list, te_labels_list
